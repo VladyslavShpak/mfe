@@ -6,7 +6,7 @@ const packageJson = require("../package.json");
 
 const devConfig = {
   mode: "development",
-
+  output: { publicPath: "http://localhost:8081/" },
   devServer: {
     port: 8081,
     historyApiFallback: {
@@ -14,7 +14,6 @@ const devConfig = {
     },
   },
   plugins: [
-    new HtmlWebpackPlugin({ template: "./public/index.html" }),
     new ModuleFederationPlugin({
       name: "marketing",
       filename: "remoteEntry.js",
@@ -22,6 +21,9 @@ const devConfig = {
         "./MarketingApp": "./src/bootstrap",
       },
       shared: packageJson.dependencies,
+    }),
+    new HtmlWebpackPlugin({
+      template: "./public/index.html",
     }),
   ],
 };
